@@ -10,11 +10,11 @@
             <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="0px" class="login_form">
                 <!-- 用户名 -->
                 <el-form-item prop="username" >
-                    <el-input v-model="loginForm.username" prefix-icon="el-icon-s-custom"></el-input>
+                    <el-input v-model="loginForm.username" prefix-icon="el-icon-s-custom" placeholder="用户名"></el-input>
                 </el-form-item>
             <!-- 密码 -->
                 <el-form-item prop="password">
-                    <el-input v-model="loginForm.password" prefix-icon="el-icon-lock" type="password"></el-input>
+                    <el-input v-model="loginForm.password" prefix-icon="el-icon-lock" type="password" placeholder="密码"></el-input>
                 </el-form-item>
             <!-- 按钮区域 -->
                 <el-form-item class="btns" >
@@ -44,7 +44,7 @@ export default {
                 ],
                 // 验证密码是否合法
                 password:[
-                    { required: true, message: '请输入用户名', trigger: 'blur' },
+                    { required: true, message: '请输入密码', trigger: 'blur' },
                     { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
                 ]
             }
@@ -57,6 +57,7 @@ export default {
             this.$refs.loginFormRef.resetFields();
         },
         login(){
+            // 预校验
             this.$refs.loginFormRef.validate(async(valid)=>{
                 // console.log(valid);
                if(!valid) {

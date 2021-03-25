@@ -37,7 +37,7 @@
         prop="mg_state"
         label="状态"
         >
-        <template slot-scope="scope">
+        <template v-slot="scope">
             <!-- {{scope.row}} -->
         <el-switch v-model="scope.row.mg_state" @change="userStateChange(scope.row)">
 </el-switch>
@@ -48,7 +48,7 @@
         label="操作"
         width="180px"
         >
-        <template slot-scope="scope">
+        <template v-slot="scope">
             <!-- {{scope.row}} -->
  <!-- 修改按钮 -->
  <el-tooltip class="item" effect="dark" content="编辑" placement="top" :enterable="false">

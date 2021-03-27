@@ -75,7 +75,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page.sync="queryInfo.pagenum"
-      :page-sizes="[2, 5, 10, 20]"
+      :page-sizes="[5, 10, 20,50]"
       :page-size="queryInfo.pagesize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -175,7 +175,7 @@ export default {
             // 当前页码
             pagenum:1,
             // 当前每页显示条数
-            pagesize:2,
+            pagesize:5,
             },
             userList:[],
             total:0,

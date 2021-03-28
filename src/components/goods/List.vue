@@ -12,8 +12,8 @@
         <el-row :gutter="12">
             <!-- 搜索框 -->
             <el-col :span="8">
-                <el-input placeholder="请输入内容" clearable>
-                    <el-button slot="append" icon="el-icon-search"></el-button>
+                <el-input placeholder="请输入内容" clearable v-model="queryInfo.query" @clear="searchInputListCleared">
+                    <el-button slot="append" icon="el-icon-search" @click="getGoodsList" ></el-button>
                 </el-input>
             </el-col>
             <el-col :span="4">
@@ -32,15 +32,21 @@
             </el-table-column>
             <el-table-column prop="goods_number" label="商品数量(个)" width="100">
             </el-table-column>
-            <el-table-column label="操作" width="120">
+           
+            
+                    <el-table-column label="操作" width="120">
+                    <template v-slot="scope">
                 <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
                     <el-button type="primary" icon="el-icon-edit" circle></el-button>
                 </el-tooltip>
                 <el-tooltip class="item" effect="dark" content="删除" placement="top-start">
-                    <el-button type="danger" icon="el-icon-delete" circle></el-button>
+                    <el-button type="danger" icon="el-icon-delete" circle @click="goodsDelete(scope.row.goods_id)"></el-button></el-button>
                 </el-tooltip>
-
+         </template>
             </el-table-column>
+                
+           
+            
         </el-table>
         <!-- 商品分页功能 -->
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="queryInfo.pagenum" :page-sizes="[5, 10, 20,50]" :page-size="queryInfo.pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total">
@@ -81,14 +87,40 @@ export default {
                 this.total = res.data.total
             }
         },
+        // 分页切换当前页面数
         handleSizeChange(newSize) {
+            // newSize代表当前页面显示条数
             this.queryInfo.pagesize = newSize
             this.getGoodsList()
         },
+        // 分页切换页数，newPage代表当前页码
         handleCurrentChange(newPage) {
             this.queryInfo.pagenum = newPage
             this.getGoodsList()
 
+        },
+        // 搜索框清空触发的监听事件
+        searchInputListCleared(){
+            this.getGoodsList()
+        },
+        // 删除商品
+       async goodsDelete(id){
+           const confirmResult=await this.$confirm('此操作将永久删除该商品, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).catch(err=>err)
+        if(confirmResult !=='confirm'){
+            return this.$message.info('已经取消删除')
+        }else{
+            const {data:res}=await this.$http.delete(`goods/${id}`)
+            if(res.meta.status !==200){
+                return this.$message.error('删除商品失败')
+            }else{
+                this.$message.success('删除商品成功')
+                this.getGoodsList()
+            }
+        }
         }
 
     },

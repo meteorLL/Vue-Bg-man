@@ -7,7 +7,7 @@
         <el-breadcrumb-item>商品列表</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 卡片区域 -->
-    <el-card class="box-card">
+    <el-card class="el-table">
         <!-- 搜索框和添加商品 -->
         <el-row :gutter="12">
             <!-- 搜索框 -->
@@ -40,7 +40,7 @@
                     <el-button type="primary" icon="el-icon-edit" circle></el-button>
                 </el-tooltip>
                 <el-tooltip class="item" effect="dark" content="删除" placement="top-start">
-                    <el-button type="danger" icon="el-icon-delete" circle @click="goodsDelete(scope.row.goods_id)"></el-button></el-button>
+                    <el-button type="danger" icon="el-icon-delete" circle @click="goodsDelete(scope.row.goods_id)"></el-button>
                 </el-tooltip>
          </template>
             </el-table-column>

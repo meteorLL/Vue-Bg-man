@@ -4,6 +4,7 @@ import router from './router'
 import './plugins/element.js'
 import './assets/css/global.css'
 import './assets/fonts/iconfont.css'
+import treeTable from 'vue-table-with-tree-grid'
 // 导入axios
 import axios from 'axios'
 // 讲axios挂载到vue的原型对象上,这样vue的组件都可以利用this.$http访问axios请求
@@ -17,6 +18,8 @@ axios.interceptors.request.use(config => {
     return config
 })
 Vue.config.productionTip = false
+    // 注册为全局组件
+Vue.component('tree-table', treeTable)
 
 new Vue({
     router,

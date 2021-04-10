@@ -36,17 +36,16 @@
             
                     <el-table-column label="操作" width="120">
                     <template v-slot="scope">
-                <el-tooltip class="item" effect="dark" content="编辑" placement="top-start" :enterable="false">
-                    <el-button type="primary" icon="el-icon-edit" size="mini"></el-button>
+
+                <el-tooltip class="item" effect="dark" content="编辑" placement="top-start">
+                    <el-button type="primary" icon="el-icon-edit" size="mini" ></el-button>
                 </el-tooltip>
-                <el-tooltip class="item" effect="dark" content="删除" placement="top-start" :enterable="false">
-                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="goodsDelete(scope.row.goods_id)"></el-button>
+                <el-tooltip class="item" effect="dark" content="删除" placement="top-start">
+                    <el-button type="danger" icon="el-icon-delete" size="mini"  @click="goodsDelete(scope.row.goods_id)"></el-button>
                 </el-tooltip>
          </template>
             </el-table-column>
-                
-           
-            
+  
         </el-table>
         <!-- 商品分页功能 -->
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="queryInfo.pagenum" :page-sizes="[5, 10, 20,50]" :page-size="queryInfo.pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total">

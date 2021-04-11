@@ -266,7 +266,7 @@ export default {
         this.queryInfo.pagesize = newSize
         // 重新获取用户数据
         this.getUserList()
-        console.log(newSize);
+        // console.log(newSize);
 
     },
     handleCurrentChange(newPage){
@@ -280,7 +280,7 @@ export default {
     async userStateChange(userInfo){
         // console.log(userInfo);
         const {data:res} = await this.$http.put(`users/${userInfo.id}/state/${userInfo.mg_state}`)
-        console.log(res);
+        // console.log(res);
         if(res.meta.status !== 200){
             userInfo.mg_state =!userInfo.mg_state
             return this.$message.error('更新状态失败')

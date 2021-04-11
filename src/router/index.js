@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../components/Login.vue'
-import Home from '@/components/Home.vue'
+import Login from '@/components/Login'
+import Home from '@/components/Home'
 import Welcome from '@/components/Welcome'
 import Users from '@/components/user/Users'
 import Rights from '@/components/rights/Rights'
@@ -9,6 +9,7 @@ import Roles from '@/components/rights/Roles'
 import List from '@/components/goods/List'
 import Cate from '@/components/goods/Cate'
 import Params from '@/components/goods/Params'
+import Add from '@/components/goods/Add'
 Vue.use(VueRouter)
 
 const routes = [
@@ -51,6 +52,10 @@ const routes = [
             }, {
                 path: '/params',
                 component: Params
+            },
+            {
+                path: '/goods/add',
+                component: Add
             }
         ]
     }

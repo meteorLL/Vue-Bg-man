@@ -189,9 +189,7 @@ export default {
 
         }
     },
-    created() {
-        this.getCateList()
-    },
+   
     methods: {
         // 获取商品分类列表
         async getCateList() {
@@ -226,7 +224,7 @@ export default {
                 return
             } else {
                 // 根据所选分类的ID，和当前所处的面板，获取对应的参数
-                const { data: res } = await this.$http.get(`categories/${this.cateID}/attributes`, {
+                const { data: res } = await this.$http.get(`categories/${this.cateId}/attributes`, {
                     params: {
                         sel: this.activeName
                     }
@@ -236,7 +234,11 @@ export default {
                     return this.$message.error('获取参数列表失败')
                 } else {
                     res.data.forEach(item => {
-                        item.attr_vals = item.attr_vals ? item.attr_vals.split(' ') : []
+                        if(item.attr_vals.indexOf(',')!==-1){
+                             item.attr_vals= item.attr_vals?item.attr_vals.split(','):[]
+                        }else{
+                            item.attr_vals= item.attr_vals?item.attr_vals.split(' '):[]
+                        }
                         // 控制文本显示与隐藏
                         item.inputVisible = false
                         //文本框中输入的值
@@ -264,7 +266,7 @@ export default {
                     return
                 } else {
                     // 添加参数
-                    const { data: res } = await this.$http.post(`categories/${this.cateID}/attributes`, {
+                    const { data: res } = await this.$http.post(`categories/${this.cateId}/attributes`, {
                         attr_name: this.addForm.attr_name,
                         attr_sel: this.activeName
                     })
@@ -281,7 +283,7 @@ export default {
         async showEditDialog(scope) {
 
             // 根据属性ID查询对应参数
-            const { data: res } = await this.$http.get(`categories/${this.cateID}/attributes/${scope.attr_id}`, {
+            const { data: res } = await this.$http.get(`categories/${this.cateId}/attributes/${scope.attr_id}`, {
                 params: {
                     attr_sel: this.activeName
                 }
@@ -300,7 +302,7 @@ export default {
                 if (!valid) {
                     return
                 } else {
-                    const { data: res } = await this.$http.put(`categories/${this.cateID}/attributes/${this.editForm.attr_id}`, {
+                    const { data: res } = await this.$http.put(`categories/${this.cateId}/attributes/${this.editForm.attr_id}`, {
                         attr_name: this.editForm.attr_name,
                         attr_sel: this.activeName
                     })
@@ -329,7 +331,7 @@ export default {
             if (confirmResult !== 'confirm') {
                 return this.$message.info('已经取消删除')
             } else {
-                const { data: res } = await this.$http.delete(`categories/${this.cateID}/attributes/${attr_id}`)
+                const { data: res } = await this.$http.delete(`categories/${this.cateId}/attributes/${attr_id}`)
                 if (res.meta.status !== 200) {
                     this.$message.error('删除失败')
                 } else {
@@ -378,7 +380,7 @@ export default {
             this.saveAttrVals(row)
         },
        async saveAttrVals(row){
-             const {data:res} =await this.$http.put(`categories/${this.cateID}/attributes/${row.attr_id}`,{
+             const {data:res} =await this.$http.put(`categories/${this.cateId}/attributes/${row.attr_id}`,{
                     attr_name:row.attr_name,
                     attr_sel:row.attr_sel,
                     attr_vals:row.attr_vals.join(' ')
@@ -392,7 +394,10 @@ export default {
             }
 
     },
-
+ created() {
+        this.getCateList()
+        this.getParamsData()
+    },
     computed: {
         // 如果按钮需要被禁用则返回true，否则返回false
         isBtnDisabled() {
@@ -403,7 +408,7 @@ export default {
             }
         },
         // 当前选中的三级分类的ID,因为这里只加最后一级分类的参数
-        cateID() {
+        cateId() {
             if (this.selectedCateKeys.length === 3) {
                 return this.selectedCateKeys[2]
             } else {

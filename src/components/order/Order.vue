@@ -175,7 +175,7 @@ export default {
       } else {
         this.total = res.data.total;
         this.orderList = res.data.goods;
-        console.log(this.orderList);
+        // console.log(this.orderList);
       }
     },
     handleSizeChange(val) {

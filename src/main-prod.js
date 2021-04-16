@@ -9,20 +9,26 @@ import treeTable from 'vue-table-with-tree-grid'
 import axios from 'axios'
 // 导入vue-quill-editor富文本编辑器
 import VueQuillEditor from 'vue-quill-editor'
-// 导入样式
-import 'quill/dist/quill.core.css' // import styles
-import 'quill/dist/quill.snow.css' // for snow theme
-import 'quill/dist/quill.bubble.css' // for bubble theme
 
+// 导入进度条nprogress进度条插件
+import Nprogress from 'nprogress'
 
 // 讲axios挂载到vue的原型对象上,这样vue的组件都可以利用this.$http访问axios请求
 Vue.prototype.$http = axios
     // 为axios设置请求根路径
 axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
+
+// 在request拦截器中展示进度条，Nprogress.start()
 axios.interceptors.request.use(config => {
-    // console.log(config);
-    config.headers.Authorization = window.sessionStorage.getItem('token')
-        // 必须return config
+        // console.log(config);
+        Nprogress.start()
+        config.headers.Authorization = window.sessionStorage.getItem('token')
+            // 在最后必须return config
+        return config
+    })
+    // 在response拦截器中隐藏进度条,Nprogress.done()
+axios.interceptors.response.use(config => {
+    Nprogress.done()
     return config
 })
 Vue.config.productionTip = false
